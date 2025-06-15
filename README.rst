@@ -1,4 +1,3 @@
-```
 API PoleInfo
 ============
 
@@ -21,4 +20,3 @@ Authentification par jeton JWT.
 Point d'entrée : main.py
 
 Auteur : Elias GAUTHIER
-```
