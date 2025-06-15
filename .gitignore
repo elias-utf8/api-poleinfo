@@ -1,0 +1,8 @@
+# Variables d'environnement sensibles
+.env
+.env.local
+.env.production
+.env.staging
+*.env
+
+config.py
