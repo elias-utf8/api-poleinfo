@@ -67,7 +67,6 @@ def read_root():
 
 
 if __name__ == "__main__":
-    # Message affiché au démarrage du serveur en mode autonome
     print("=" * 50)
     print("  PoleInfo API - Système de gestion des réservations")
     print("  Développé par Elias GAUTHIER")
