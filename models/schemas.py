@@ -119,6 +119,7 @@ class Token(BaseModel):
     token_type: str
     user_type: int
     user_name: str
+    user_login: str
 
 
 # --------------------------------------------------#

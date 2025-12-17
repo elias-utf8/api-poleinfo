@@ -55,7 +55,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends()):
 
     type_user = user["type"]
     user_login = user["login"]
-    user_name = user["nom"]
+    user_name = f"{user['prenom']} {user['nom']}"
 
     token = create_access_token(user["id_user"])
     return {
