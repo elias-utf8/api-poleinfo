@@ -1,20 +1,25 @@
-# db/database.py
+"""
+Gestionnaires de contexte pour la connexion à la base de données MySQL.
+
+Auteur: Elias GAUTHIER
+"""
+
+import os
+from contextlib import contextmanager
 
 import mysql.connector
-from mysql.connector import Error
-from contextlib import contextmanager
-import os
-
 from dotenv import load_dotenv
+from mysql.connector import Error
 
 load_dotenv()
 
 DB_CONFIG = {
-    'host': os.getenv('DB_HOST'),
-    'database': os.getenv('DB_DATABASE'),
-    'user': os.getenv('DB_USER'),
-    'password': os.getenv('DB_PASSWORD')
+    "host": os.getenv("DB_HOST"),
+    "database": os.getenv("DB_DATABASE"),
+    "user": os.getenv("DB_USER"),
+    "password": os.getenv("DB_PASSWORD"),
 }
+
 
 @contextmanager
 def get_db_connection():
@@ -29,6 +34,7 @@ def get_db_connection():
     finally:
         if connection and connection.is_connected():
             connection.close()
+
 
 @contextmanager
 def get_db_cursor():

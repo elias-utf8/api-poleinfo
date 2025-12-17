@@ -1,54 +1,32 @@
-#endpoints/classes.py
-
-
-
 """
-API Pôle Info
---------------
+Routes de gestion des classes (récupération, création, suppression).
 
-Auteur : Elias GAUTHIER  
-Dernière date de mise à jour : 17/04/2025
-
-Description : Gestion des routes API relatives aux opérations sur les classes
-(récupération, création et suppression).
+Auteur: Elias GAUTHIER
 """
-
-from models.schemas import ClasseResponse, ClasseDelete, ClasseCreate
-from core.auth import verify_token
-from core.security import verify_admin
-from db.requests.classes import get_all_classes, remove_classe, get_classe_by_nom, create_classe
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from typing import List
+
+from core.security import verify_admin
+from db.requests.classes import create_classe, get_all_classes, get_classe_by_nom, remove_classe
+from models.schemas import ClasseCreate, ClasseDelete, ClasseResponse
 
 router = APIRouter(tags=["classes"])
 
 
 @router.get(
     "/",
-    response_model=List[ClasseResponse],
+    response_model=list[ClasseResponse],
     status_code=status.HTTP_200_OK,
     responses={
         200: {
             "description": "Liste des classes récupérée avec succès",
-            "content": {
-                "application/json": {
-                    "example": [
-                        {"nom": "3W03"},
-                        {"nom": "3C01"}
-                    ]
-                }
-            }
+            "content": {"application/json": {"example": [{"nom": "3W03"}, {"nom": "3C01"}]}},
         },
         404: {
             "description": "Aucune classe trouvée",
-            "content": {
-                "application/json": {
-                    "example": {"detail": "Aucune classe trouvée"}
-                }
-            }
-        }
-    }
+            "content": {"application/json": {"example": {"detail": "Aucune classe trouvée"}}},
+        },
+    },
 )
 def get_classes():
     """
@@ -56,10 +34,7 @@ def get_classes():
     """
     classes = get_all_classes()
     if not classes:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Aucune classe trouvée"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Aucune classe trouvée")
     return classes
 
 
@@ -70,46 +45,30 @@ def get_classes():
     responses={
         200: {
             "description": "Classe supprimée avec succès",
-            "content": {
-                "application/json": {
-                    "example": {"message": "Classe '1A' supprimée avec succès"}
-                }
-            }
+            "content": {"application/json": {"example": {"message": "Classe '1A' supprimée avec succès"}}},
         },
         404: {
             "description": "Classe non trouvée",
-            "content": {
-                "application/json": {
-                    "example": {"detail": "Classe non trouvée"}
-                }
-            }
+            "content": {"application/json": {"example": {"detail": "Classe non trouvée"}}},
         },
         500: {
             "description": "Erreur serveur lors de la suppression",
-            "content": {
-                "application/json": {
-                    "example": {"detail": "Erreur lors de la suppression de la classe"}
-                }
-            }
-        }
-    }
+            "content": {"application/json": {"example": {"detail": "Erreur lors de la suppression de la classe"}}},
+        },
+    },
 )
 def delete_classes(classe: ClasseDelete, user_id: int = Depends(verify_admin)):
     """
-    Supprime une classe existante.  
+    Supprime une classe existante.
     Cette opération nécessite des droits administrateur.
     """
     existing_salle = get_classe_by_nom(classe.nom)
     if not existing_salle:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Classe non trouvée"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Classe non trouvée")
     result = remove_classe(classe.nom)
     if not result:
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Erreur lors de la suppression de la classe"
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Erreur lors de la suppression de la classe"
         )
     return {"message": f"Classe '{classe.nom}' supprimée avec succès"}
 
@@ -121,38 +80,22 @@ def delete_classes(classe: ClasseDelete, user_id: int = Depends(verify_admin)):
     responses={
         201: {
             "description": "Classe créée avec succès",
-            "content": {
-                "application/json": {
-                    "example": {
-                        "message": "Classe créé avec succès",
-                        "id": 3
-                    }
-                }
-            }
+            "content": {"application/json": {"example": {"message": "Classe créé avec succès", "id": 3}}},
         },
         400: {
             "description": "Une classe avec ce nom existe déjà",
-            "content": {
-                "application/json": {
-                    "example": {"detail": "Une classe avec ce nom existe déjà"}
-                }
-            }
+            "content": {"application/json": {"example": {"detail": "Une classe avec ce nom existe déjà"}}},
         },
-        422: {
-            "description": "Erreur de validation des données"
-        }
-    }
+        422: {"description": "Erreur de validation des données"},
+    },
 )
 def add_classe(classe: ClasseCreate, user_id: int = Depends(verify_admin)):
     """
-    Crée une nouvelle classe.  
+    Crée une nouvelle classe.
     Cette opération nécessite des droits administrateur.
     """
     existing_classe = get_classe_by_nom(classe.nom)
     if existing_classe:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Une classe avec ce nom existe déjà"
-        )
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Une classe avec ce nom existe déjà")
     classe_id = create_classe(nom=classe.nom)
     return {"message": "Classe créé avec succès", "id": classe_id}

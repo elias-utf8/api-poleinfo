@@ -5,4 +5,18 @@
 .env.staging
 *.env
 
-config.py
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.ruff_cache/
+
+# Virtual Environment
+venv/
+env/
+ENV/

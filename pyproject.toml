@@ -1,0 +1,26 @@
+[tool.ruff]
+line-length = 120
+target-version = "py313"
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes
+    "I",      # isort
+    "UP",     # pyupgrade
+    "B",      # flake8-bugbear
+    "C4",     # flake8-comprehensions
+]
+ignore = [
+    "E501",   # line too long (handled by formatter)
+    "N999",   # invalid module name (api-poleinfo has dash)
+    "B008",   # do not perform function calls in argument defaults (FastAPI Depends pattern)
+    "B904",   # raise from exception (not critical)
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"

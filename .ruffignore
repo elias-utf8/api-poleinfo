@@ -1,0 +1,13 @@
+# Ignore virtual environment
+venv/
+.venv/
+
+# Ignore cache directories
+__pycache__/
+*.pyc
+.ruff_cache/
+
+# Ignore distribution
+dist/
+build/
+*.egg-info/

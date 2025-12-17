@@ -1,41 +1,35 @@
-#main.py
+"""
+Point d'entrée de l'API de gestion des réservations de salles.
 
+Auteur: Elias GAUTHIER
 """
-PoleInfo - API
---------------
-Auteur : Elias GAUTHIER
-Date de création : 07/02/2025
-Description : Application principale de l'API de gestion des réservations de salles du Pôle Info
-"""
+
+import locale
+from datetime import datetime
 
 from fastapi import FastAPI
-from api.endpoints import auth, users, reservations, creneaux, salles, matieres, classes
-from datetime import datetime
-import locale
 
+from api.endpoints import auth, classes, creneaux, matieres, reservations, salles, users
 
 # Création de l'application FastAPI avec métadonnées pour Swagger UI
 app = FastAPI(
-    title="PoleInfo API", 
+    title="PoleInfo API",
     description="""
     API de gestion des réservations de salles
-    
+
     Cette API permet la gestion complète des réservations de salles pour le Pôle Info.
-    
+
     Fonctionnalités principales
-    
+
     - Authentification des utilisateurs
     - Gestion des utilisateurs (création, consultation, suppression)
     - Gestion des réservations de salles
     - Gestion des salles, créneaux, matières et classes
-    
+
     Développé par Elias GAUTHIER avec la co-conception d'Ethan CLEMENT
     """,
     version="1.0.0",
-    contact={
-        "name": "Pôle Info",
-        "email": "elias.gauthier@lp2i-poitiers.fr"
-    }
+    contact={"name": "Pôle Info", "email": "elias.gauthier@lp2i-poitiers.fr"},
 )
 
 # Inclusion des routeurs pour organiser les endpoints par domaine
@@ -54,15 +48,15 @@ def read_root():
     Point d'entrée principal de l'API qui affiche un message de bienvenue
     avec la date du jour au format français.
     """
-    locale.setlocale(locale.LC_TIME, 'fr_FR.UTF-8')
+    locale.setlocale(locale.LC_TIME, "fr_FR.UTF-8")
     now = datetime.now()
     formatted_date = now.strftime("%d %B %Y")
-    
+
     return {
         "message": f"Bienvenue sur l'API PoleInfo, nous sommes le {formatted_date}",
         "documentation": "/docs",
         "version": "1.0.0",
-        "auteur": "Elias GAUTHIER"
+        "auteur": "Elias GAUTHIER",
     }
 
 
@@ -73,6 +67,7 @@ if __name__ == "__main__":
     print("=" * 50)
     print("  Documentation disponible à l'endpoint /docs")
     print("=" * 50)
-    
+
     import uvicorn
+
     uvicorn.run(app, host="0.0.0.0", port=8000)
