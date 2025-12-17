@@ -5,4 +5,13 @@
 >
 > **Status**: Ceci n'est qu'une partie du projet, pour consulter ce dernier en entier vous pouvez consulter le rapport [ici](https://raw.githubusercontent.com/elias-utf8/api-poleinfo/main/assets/BTS_CIEL_2025_E6_LP2I_GauthierElias.pdf).
 >
+
+> Page d'accueil
+
+> Page de login
+
+> Tableau de bord
+
 ## Déploiement
+Pour lancer l'API localement:
+
