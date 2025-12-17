@@ -15,6 +15,14 @@
 > Tableau de bord
 ![image](https://raw.githubusercontent.com/elias-utf8/api-poleinfo/main/assets/dashboard.png)
 
-## Déploiement
-Pour lancer l'API localement:
+## Déploiement local
+Vous ne pourrez pas tester les endpoints, car cela nécessitera une configuration complète de MariaDB. Cependant, suivez les instructions ci-dessous pour explorer l’architecture de l’API en local.
 
+ ```bash
+git clone https://github.com/elias-utf8/api-poleinfo.git
+cd api-poleinfo
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python main.py
+```
