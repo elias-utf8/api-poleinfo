@@ -26,4 +26,4 @@ source venv/bin/activate
 pip install -r requirements.txt
 python main.py
 ```
-Note : vous pouvez également consulter la documentation de l'API Swagger en ligne [ici]().
+Note : vous pouvez également consulter la documentation de l'API Swagger en ligne [ici](https://eliasgauthier.fr/poleinfo-api-docs/).
